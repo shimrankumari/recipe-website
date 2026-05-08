@@ -31,10 +31,15 @@ async function loadRecipes() {
     let r = doc.data();
 
     container.innerHTML += `
-      <div class="card">
-        <h3>${r.name}</h3>
-        <p>${r.category}</p>
-      </div>
+   <div class="card">
+
+<img src="${r.image}" width="100%">
+
+<h3>${r.name}</h3>
+
+<p>${r.category}</p>
+
+</div>
     `;
   });
 }
