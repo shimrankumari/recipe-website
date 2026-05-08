@@ -26,12 +26,18 @@ window.addRecipe = async function () {
   const category = document.getElementById("category").value;
 
   const steps = document.getElementById("steps").value;
+const image = document.getElementById("image").value;
+await addDoc(collection(db, "recipes"), {
 
-  await addDoc(collection(db, "recipes"), {
-    name,
-    category,
-    steps
-  });
+  name,
+
+  category,
+
+  steps,
+
+  image
+
+}); 
 
   alert("Recipe Added ✅");
 };
