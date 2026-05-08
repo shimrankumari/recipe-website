@@ -3,7 +3,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
   getFirestore,
   collection,
-  getDocs
+  getDocs,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -16,6 +18,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
 async function loadRecipes() {
@@ -26,22 +29,66 @@ async function loadRecipes() {
 
   container.innerHTML = "";
 
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach((docItem) => {
 
-    let r = doc.data();
+    let r = docItem.data();
 
     container.innerHTML += `
-   <div class="card">
 
-<img src="${r.image}" width="100%">
+    <div class="card">
 
-<h3>${r.name}</h3>
+      <img src="${r.image}" width="100%">
 
-<p>${r.category}</p>
+      <h3>${r.name}</h3>
 
-</div>
+      <p>${r.category}</p>
+
+      <button onclick="showSteps(\`${r.steps}\`)">
+      View Recipe
+      </button>
+
+      <button onclick="deleteRecipe('${docItem.id}')">
+      Delete
+      </button>
+
+    </div>
+
     `;
   });
 }
 
 loadRecipes();
+
+window.deleteRecipe = async function(id) {
+
+  await deleteDoc(doc(db, "recipes", id));
+
+  location.reload();
+}
+
+window.showSteps = function(steps){
+
+  alert(steps);
+
+}
+
+window.searchRecipes = function() {
+
+  let input =
+  document.getElementById("search").value.toLowerCase();
+
+  let cards =
+  document.getElementsByClassName("card");
+
+  for(let i=0;i<cards.length;i++){
+
+    let text =
+    cards[i].innerText.toLowerCase();
+
+    if(text.includes(input)){
+      cards[i].style.display = "block";
+    }else{
+      cards[i].style.display = "none";
+    }
+  }
+}
