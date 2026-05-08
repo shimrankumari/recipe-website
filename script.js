@@ -1,15 +1,35 @@
-let recipes = [
-  { name: "Litti Chokha", category: "Bihari" },
-  { name: "Pizza", category: "Italian" },
-  { name: "Dal Tadka", category: "Indian" },
-  { name: "Pav Bhaji", category: "Maharashtrian" }
-];
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
-function displayRecipes(list) {
+import {
+  getFirestore,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSJubJ8exC2m-qMgpjfHSu8B1m-z_fi8o",
+  authDomain: "recipe-website-a56ad.firebaseapp.com",
+  projectId: "recipe-website-a56ad",
+  storageBucket: "recipe-website-a56ad.firebasestorage.app",
+  messagingSenderId: "18432563546",
+  appId: "1:18432563546:web:d9d4153aa5aa093b833b63"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadRecipes() {
+
+  const querySnapshot = await getDocs(collection(db, "recipes"));
+
   let container = document.getElementById("recipes");
+
   container.innerHTML = "";
 
-  list.forEach(r => {
+  querySnapshot.forEach((doc) => {
+
+    let r = doc.data();
+
     container.innerHTML += `
       <div class="card">
         <h3>${r.name}</h3>
@@ -19,27 +39,4 @@ function displayRecipes(list) {
   });
 }
 
-displayRecipes(recipes);
-
-// Search
-document.getElementById("search").addEventListener("input", function() {
-  let value = this.value.toLowerCase();
-
-  let filtered = recipes.filter(r =>
-    r.name.toLowerCase().includes(value)
-  );
-
-  displayRecipes(filtered);
-});
-
-// Category filter
-document.getElementById("category").addEventListener("change", function() {
-  let value = this.value;
-
-  if (value === "all") {
-    displayRecipes(recipes);
-  } else {
-    let filtered = recipes.filter(r => r.category === value);
-    displayRecipes(filtered);
-  }
-});
+loadRecipes();
