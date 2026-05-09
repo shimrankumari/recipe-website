@@ -7,7 +7,13 @@
 <body>
 
 <h1>🍲 My Recipe Hub</h1>
-
+<div id="filters">
+  <button onclick="filterRecipes('all')">All</button>
+  <button onclick="filterRecipes('Indian')">Indian</button>
+  <button onclick="filterRecipes('Italian')">Italian</button>
+  <button onclick="filterRecipes('Bihari')">Bihari</button>
+  <button onclick="filterRecipes('Maharashtrian')">Maharashtrian</button>
+</div>
 <input type="text" id="search" placeholder="Search recipe...">
 
 <select id="category">
