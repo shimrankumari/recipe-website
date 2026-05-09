@@ -22,4 +22,11 @@ input, select {
   margin: 10px;
   width: 200px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+#filters {
+  text-align: center;
+  margin: 20px 0;
 }
+
+#filters button {
+  margin: 5px;
+}}
