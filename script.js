@@ -89,6 +89,20 @@ window.searchRecipes = function() {
       cards[i].style.display = "block";
     }else{
       cards[i].style.display = "none";
+  window.filterRecipes = function(category) {
+  let cards = document.getElementsByClassName("card");
+
+  for (let i = 0; i < cards.length; i++) {
+    let text = cards[i].innerText.toLowerCase();
+
+    if (category === "all") {
+      cards[i].style.display = "block";
+    } else if (text.includes(category.toLowerCase())) {
+      cards[i].style.display = "block";
+    } else {
+      cards[i].style.display = "none";
     }
+  }
+};  }
   }
 }
